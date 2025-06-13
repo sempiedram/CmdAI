@@ -37,6 +37,21 @@ if "%~1"=="clean" if "%~2"=="" (
     del cai_script.py
     exit /b
 )
+if "%~1"=="install" if "%~2"=="" (
+    echo "Install command requires library name to be installed:"
+    echo "cai install <library name>"
+    exit /b
+)
+if "%~1"=="install" if not "%~2"=="" (
+    echo Installing library "%~2"...
+    set "original_dir=%cd%"
+    pushd %~dp0
+    call .\venv\Scripts\activate.bat
+    python -m pip install %~2
+    call deactivate.bat
+    popd
+    exit /b
+)
 
 set "original_dir=%cd%"
 pushd %~dp0
